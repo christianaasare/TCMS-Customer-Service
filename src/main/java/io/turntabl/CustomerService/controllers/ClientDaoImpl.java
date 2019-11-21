@@ -1,5 +1,6 @@
 package io.turntabl.CustomerService.controllers;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.turntabl.CustomerService.DAO.ClientDAO;
 import io.turntabl.CustomerService.models.ClientTO;
@@ -7,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 
+
+@Api
+@RestController
 public class ClientDaoImpl implements ClientDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -24,7 +27,7 @@ public class ClientDaoImpl implements ClientDAO {
     @ApiOperation("Search Client By Name")
     @Override
     @GetMapping("/{name}")
-    public List<ClientTO> getClientByName(@PathVariable String customerName) {
+    public List<ClientTO> getClientByName(String customerName) {
         return this.jdbcTemplate.query("select * from customers where name like ?", new Object[]{customerName},BeanPropertyRowMapper.newInstance(ClientTO.class));
     }
 
