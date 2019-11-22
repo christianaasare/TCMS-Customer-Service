@@ -25,11 +25,13 @@ public class ClientDaoImpl implements ClientDAO {
     }
 
     @ApiOperation("Search Client By Name")
-    @GetMapping("/clients/{name}")
+    @Override
+    @GetMapping("/clients/search/{name}")
     public List<ClientTO> getClientByName(
-            @RequestParam
-            String customerName) {
-        return this.jdbcTemplate.query("select * from customers where name like ?", new Object[]{customerName},BeanPropertyRowMapper.newInstance(ClientTO.class));
+            @PathVariable String name) {
+        return this.jdbcTemplate.query("select * from customers where name like ?",
+                new Object[]{name + "%"},
+                BeanPropertyRowMapper.newInstance(ClientTO.class));
     }
 //
     @ApiOperation("Add Client")
@@ -38,17 +40,16 @@ public class ClientDaoImpl implements ClientDAO {
         jdbcTemplate.update(
                 "insert into customers(name,address,phone,email) values(?,?,?,?)",
                 addClient.get("name"), addClient.get("address"), addClient.get("phone"), addClient.get("email"));
-        System.out.println("Client has been added successfully");
+
 
     }
     @ApiOperation("Delete Client By ID")
-    @DeleteMapping("/clients/{id}")
     @Override
-    public void deleteClient(@PathVariable String clientID) {
+    @DeleteMapping("/clients/delete/{id}")
+    public void deleteClient(@PathVariable("id") Integer customer_id) {
         jdbcTemplate.update(
-                "delete from customers where client_id = ?",
-                clientID);
-        System.out.println("Client Deleted Successfully");
+                "delete from customers where customer_id = ?", customer_id);
+
     }
 
 

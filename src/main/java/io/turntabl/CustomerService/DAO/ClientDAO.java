@@ -6,9 +6,9 @@ import java.util.Map;
 
     public interface ClientDAO {
         List<ClientTO> getAllClients();
-        List<ClientTO> getClientByName(String customerName);
+        List<ClientTO> getClientByName(String name);
         void addClient(Map<String,String> addClient);
-        void deleteClient( String clientID);
+        void deleteClient( Integer clientID);
 
     }
 
