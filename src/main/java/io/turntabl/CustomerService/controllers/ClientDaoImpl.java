@@ -19,21 +19,21 @@ public class ClientDaoImpl implements ClientDAO {
     private JdbcTemplate jdbcTemplate;
 
     @ApiOperation("Get All Clients")
-    @GetMapping("/getAllClients")
+    @GetMapping("/client")
     public List<ClientTO> getAllClients() {
         return this.jdbcTemplate.query("select * from customers", BeanPropertyRowMapper.newInstance(ClientTO.class));
     }
 
     @ApiOperation("Search Client By Name")
-    @Override
-    @GetMapping("/{name}")
-    public List<ClientTO> getClientByName(String customerName) {
+    @GetMapping("/clients/{name}")
+    public List<ClientTO> getClientByName(
+            @RequestParam
+            String customerName) {
         return this.jdbcTemplate.query("select * from customers where name like ?", new Object[]{customerName},BeanPropertyRowMapper.newInstance(ClientTO.class));
     }
-
+//
     @ApiOperation("Add Client")
-    @Override
-    @PostMapping("/")
+    @PostMapping("/clients")
     public void addClient(@RequestBody Map<String,String> addClient) {
         jdbcTemplate.update(
                 "insert into customers(name,address,phone,email) values(?,?,?,?)",
@@ -42,34 +42,14 @@ public class ClientDaoImpl implements ClientDAO {
 
     }
     @ApiOperation("Delete Client By ID")
+    @DeleteMapping("/clients/{id}")
     @Override
-    @DeleteMapping("/{id}")
     public void deleteClient(@PathVariable String clientID) {
         jdbcTemplate.update(
                 "delete from customers where client_id = ?",
                 clientID);
         System.out.println("Client Deleted Successfully");
     }
+
+
 }
-//    @ApiOperation("customer")
-//    @GetMapping("/customer")
-//    public ClientTO customer(
-//
-//            @RequestParam(name = "name",defaultValue = "Name of Client")
-//            String name,
-//            @RequestParam(name ="address",defaultValue = "Address of Client")
-//                    String address,
-//            @RequestParam(name = "email",defaultValue = "Email of of Client")
-//                    String email,
-//            @RequestParam(name = "telephone",defaultValue = "Telephone of Client")
-//                    String telephone){
-//        ClientTO myCustomer = new ClientTO();
-//        myCustomer.setName(name);
-//        myCustomer.setAddress(address);
-//        myCustomer.setEmail(email);
-//        myCustomer.setPhone(telephone);
-//
-//        return myCustomer;
-//    }
-
-
