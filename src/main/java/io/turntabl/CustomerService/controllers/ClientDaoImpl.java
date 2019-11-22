@@ -36,8 +36,8 @@ public class ClientDaoImpl implements ClientDAO {
     @PostMapping("/")
     public void addClient(@RequestBody Map<String,String> addClient) {
         jdbcTemplate.update(
-                "insert into customers(name,address,telephone,email) values(?,?,?,?)",
-                addClient.get("name"), addClient.get("address"), addClient.get("telephone"), addClient.get("email"));
+                "insert into customers(name,address,phone,email) values(?,?,?,?)",
+                addClient.get("name"), addClient.get("address"), addClient.get("phone"), addClient.get("email"));
         System.out.println("Client has been added successfully");
 
     }
