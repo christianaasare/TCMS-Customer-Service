@@ -8,7 +8,8 @@ import java.util.Map;
         List<ClientTO> getAllClients();
         List<ClientTO> getClientByName(String name);
         void addClient(Map<String,String> addClient);
-        void deleteClient( Integer clientID);
+        void deleteClient(Integer clientID);
+        void updateClient(Integer clientID, ClientTO client);
 
     }
 

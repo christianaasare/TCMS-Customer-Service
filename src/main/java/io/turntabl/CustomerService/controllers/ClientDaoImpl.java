@@ -19,23 +19,24 @@ public class ClientDaoImpl implements ClientDAO {
     private JdbcTemplate jdbcTemplate;
 
     @ApiOperation("Get All Clients")
-    @GetMapping("/client")
+    @GetMapping("/clients")
+    @Override
     public List<ClientTO> getAllClients() {
         return this.jdbcTemplate.query("select * from customers", BeanPropertyRowMapper.newInstance(ClientTO.class));
     }
 
     @ApiOperation("Search Client By Name")
-    @Override
     @GetMapping("/clients/search/{name}")
-    public List<ClientTO> getClientByName(
-            @PathVariable String name) {
+    @Override
+    public List<ClientTO> getClientByName(@PathVariable String name) {
         return this.jdbcTemplate.query("select * from customers where name like ?",
                 new Object[]{name + "%"},
                 BeanPropertyRowMapper.newInstance(ClientTO.class));
     }
 //
     @ApiOperation("Add Client")
-    @PostMapping("/clients")
+    @Override
+    @PostMapping("/clients/addAClient")
     public void addClient(@RequestBody Map<String,String> addClient) {
         jdbcTemplate.update(
                 "insert into customers(name,address,phone,email) values(?,?,?,?)",
@@ -50,6 +51,14 @@ public class ClientDaoImpl implements ClientDAO {
         jdbcTemplate.update(
                 "delete from customers where customer_id = ?", customer_id);
 
+    }
+    @ApiOperation("Update a client")
+    @PutMapping("/clients/updateClient/{id}")
+    @Override
+    public void updateClient(Integer clientID, ClientTO client) {
+        this.jdbcTemplate.update(
+                "update customers set name = ?, phone = ?, address = ?, email = ?, where customer_id = ?",
+                client.getName(), client.getPhone(),client.getAddress(), client.getEmail());
     }
 
 
