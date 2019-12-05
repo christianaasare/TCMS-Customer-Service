@@ -20,6 +20,7 @@ public class ClientDaoImpl implements ClientDAO {
     private JdbcTemplate jdbcTemplate;
 
     @ApiOperation("Get All Clients")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/clients")
     @Override
     public List<ClientTO> getAllClients() {
