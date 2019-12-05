@@ -19,16 +19,16 @@ public class ClientDaoImpl implements ClientDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @ApiOperation("Get All Clients")
-    @CrossOrigin
     @GetMapping("/clients")
     @Override
     public List<ClientTO> getAllClients() {
         return this.jdbcTemplate.query("select * from customers", BeanPropertyRowMapper.newInstance(ClientTO.class));
     }
-
+    
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @ApiOperation("Search Client By Name")
-    @CrossOrigin
     @GetMapping("/clients/search/{name}")
     @Override
     public List<ClientTO> getClientByName(@PathVariable String name) {
@@ -37,9 +37,9 @@ public class ClientDaoImpl implements ClientDAO {
                 BeanPropertyRowMapper.newInstance(ClientTO.class));
     }
 //
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @ApiOperation("Add Client")
     @Override
-    @CrossOrigin
     @PostMapping("/clients/addAClient")
     public void addClient(@RequestBody Map<String,String> addClient) {
         jdbcTemplate.update(
@@ -48,17 +48,19 @@ public class ClientDaoImpl implements ClientDAO {
 
 
     }
+    
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @ApiOperation("Delete Client By ID")
     @Override
-    @CrossOrigin
     @DeleteMapping("/clients/delete/{id}")
     public void deleteClient(@PathVariable("id") Integer customer_id) {
         jdbcTemplate.update(
                 "delete from customers where customer_id = ?", customer_id);
 
     }
+    
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @ApiOperation("Update a client")
-    @CrossOrigin
     @PutMapping("/clients/updateClient/{id}")
     @Override
     public void updateClient(Integer clientID, ClientTO client) {
