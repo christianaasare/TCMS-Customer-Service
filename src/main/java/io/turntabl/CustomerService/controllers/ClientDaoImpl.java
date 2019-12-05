@@ -14,12 +14,11 @@ import java.util.Map;
 
 @Api
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 public class ClientDaoImpl implements ClientDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @ApiOperation("Get All Clients")
     @GetMapping("/clients")
     @Override
