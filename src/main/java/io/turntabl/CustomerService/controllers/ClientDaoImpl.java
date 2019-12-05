@@ -20,6 +20,7 @@ public class ClientDaoImpl implements ClientDAO {
     private JdbcTemplate jdbcTemplate;
 
     @ApiOperation("Get All Clients")
+    @CrossOrigin
     @GetMapping("/clients")
     @Override
     public List<ClientTO> getAllClients() {
@@ -27,6 +28,7 @@ public class ClientDaoImpl implements ClientDAO {
     }
 
     @ApiOperation("Search Client By Name")
+    @CrossOrigin
     @GetMapping("/clients/search/{name}")
     @Override
     public List<ClientTO> getClientByName(@PathVariable String name) {
@@ -37,6 +39,7 @@ public class ClientDaoImpl implements ClientDAO {
 //
     @ApiOperation("Add Client")
     @Override
+    @CrossOrigin
     @PostMapping("/clients/addAClient")
     public void addClient(@RequestBody Map<String,String> addClient) {
         jdbcTemplate.update(
@@ -47,6 +50,7 @@ public class ClientDaoImpl implements ClientDAO {
     }
     @ApiOperation("Delete Client By ID")
     @Override
+    @CrossOrigin
     @DeleteMapping("/clients/delete/{id}")
     public void deleteClient(@PathVariable("id") Integer customer_id) {
         jdbcTemplate.update(
@@ -54,6 +58,7 @@ public class ClientDaoImpl implements ClientDAO {
 
     }
     @ApiOperation("Update a client")
+    @CrossOrigin
     @PutMapping("/clients/updateClient/{id}")
     @Override
     public void updateClient(Integer clientID, ClientTO client) {
